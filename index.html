@@ -1,1 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LoaderX</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script type="text/javascript" src="resources/jquery.js"></script>
+</head>
+<body>
+  <?php
+  function getIp() {
+      $keys = [
+        'HTTP_CLIENT_IP',
+        'HTTP_X_FORWARDED_FOR',
+        'REMOTE_ADDR'
+      ];
+      foreach ($keys as $key) {
+        if (!empty($_SERVER[$key])) {
+          $ip = trim(end(explode(',', $_SERVER[$key])));
+          if (filter_var($ip, FILTER_VALIDATE_IP)) {
+            return $ip;
+          }
+        }
+      }
+    }
+    
+    $ip = getIp();
+  ?>
+    <div 
+        class='hidden'
+        ip='<?= $ip ?>'
+    ><div>
+    
+    <div class="center">
+        <a style="margin-left:49px;">LoaderX</a>
+        <br><br>
+        <div id="dw" style="display:none"></div>
+        <a class="btn" href="resources/loaderx.exe">Download LoaderX</a>
+      </div>
+      </div>
+    
+    <script>
+        var dw = document.getElementById('dw');
+        var ip = $('div.hidden').data('ip');
+        var can_download = false;
+        if(ip == "178.155.6.15") {
+          can_download = true;
+        }
+        else {
+          can_download = false;
+        }
+        if(can_download) {
+          dw.style.display = 'block';
+        }
+        else {
+          dw.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
